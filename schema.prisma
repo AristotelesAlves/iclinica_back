@@ -1,0 +1,190 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Estabelecimento {
+  id                   String   @id @default(uuid())
+  razao_social         String
+  nome_fantasia        String
+  endereco             String
+  numero               String
+  bairro               String
+  complemento          String
+  uf                   String
+  cidade               String
+  cep                  String
+  cnpj                 String   @unique
+  inscricao_estadual   String
+  telefone             String
+  email                String   @unique
+  nome_responsavel     String
+  telefone_responsavel String
+  email_responsavel    String
+  usuarios_de_acesso   Int
+  created_at           DateTime
+  updated_at           DateTime
+  deleted_at           DateTime
+  is_active            Boolean
+}
+
+model licenca {
+  id              String   @id @default(uuid())
+  created_at      DateTime
+  updated_at      DateTime
+  deleted_at      DateTime
+  data_vencimento DateTime
+  is_active       Boolean
+}
+
+model Paciente {
+  id              Int        @id @default(autoincrement())
+  nome            String
+  cpf             Int
+  data_nascimento String
+  endereco        String
+  numero          Int
+  bairro          String
+  complemento     String
+  cep             Int
+  telefone        String
+  email           String
+  created_at      DateTime
+  updated_at      DateTime
+  deleted_at      DateTime
+  is_active       Boolean
+  anamnese        Anamnese[]
+
+  consulta    Consulta? @relation(fields: [consulta_id], references: [id])
+  consulta_id Int
+}
+
+model Anamnese {
+  id                             Int     @id @default(autoincrement())
+  infeccao_urinaria              Boolean
+  dst                            String
+  pedra_nos_rins                 String
+  problema_nos_testiculos        String
+  historico_de_cancer_na_familia String
+  doenca_cronica                 String
+  utiliza_remedios               String
+  fumante                        String
+  bebidas_alcoolicas             String
+  droga                          String
+
+  created_at DateTime
+  updated_at DateTime
+  deleted_at DateTime
+  is_active  Boolean
+
+  paciente    Paciente? @relation(fields: [paciente_id], references: [id])
+  paciente_id Int
+}
+
+model Agendamento {
+  id               Int      @id @default(autoincrement())
+  observacao       String
+  status           String
+  data_de_agendado DateTime
+  created_at       DateTime
+  updated_at       DateTime
+  deleted_at       DateTime
+}
+
+model Consulta {
+  id          Int      @id @default(autoincrement())
+  diagnostico String
+  prescricao  String
+  convenio    String
+  status      String
+  created_at  DateTime
+  updated_at  DateTime
+  deleted_at  DateTime
+
+  usuario  Usuario[]
+  paciente Paciente[]
+}
+
+model Usuario {
+  id         Int      @id @default(autoincrement())
+  nome       String
+  senha      String
+  ocupacao   String
+  created_at DateTime
+  updated_at DateTime
+  deleted_at DateTime
+  is_active  Boolean
+
+  controle Controle_acesso[]
+
+  Consulta    Consulta? @relation(fields: [Consulta_id], references: [id])
+  Consulta_id Int?
+}
+
+model Controle_acesso {
+  id Int @id @default(autoincrement())
+
+  created_at DateTime
+  updated_at DateTime
+  deleted_at DateTime
+  is_active  Boolean
+
+  paciente    Controle_paciente[]
+  anamnese    Controle_anamnese[]
+  agendamento Controle_agendamento[]
+  consulta    Controle_consulta[]
+
+  usuario    Usuario? @relation(fields: [usuario_id], references: [id])
+  usuario_id Int?
+}
+
+model Controle_paciente {
+  id              Int             @id @default(autoincrement())
+  read_paciente   Boolean
+  create_paciente Boolean
+  update_paciente Boolean
+  delete_paciente Boolean
+  controle        Controle_acesso @relation(fields: [controle_id], references: [id])
+  controle_id     Int
+}
+
+model Controle_anamnese {
+  id Int @id @default(autoincrement())
+
+  create_anamnese Boolean
+  update_anamnese Boolean
+  read_anamnese   Boolean
+  delete_anamnese Boolean
+
+  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
+  controle_id Int?
+}
+
+model Controle_agendamento {
+  id Int @id @default(autoincrement())
+
+  create_agendamento Boolean
+  update_agendamento Boolean
+  read_agendamento   Boolean
+  delete_agendamento Boolean
+  controle           Controle_acesso? @relation(fields: [control_id], references: [id])
+  control_id         Int?
+}
+
+model Controle_consulta {
+  id              Int     @id @default(autoincrement())
+  create_consulta Boolean
+  update_consulta Boolean
+  read_consulta   Boolean
+  delete_consulta Boolean
+
+  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
+  controle_id Int?
+}
