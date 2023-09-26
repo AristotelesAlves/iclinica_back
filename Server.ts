@@ -4,6 +4,8 @@ import { router } from "./Router";
 
 const app = Express();
 
+console.log('teste');
+
 app.use(Express.json());
 app.use(cors());
 app.use(router);
