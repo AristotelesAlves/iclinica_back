@@ -63,7 +63,7 @@ model Paciente {
   anamnese        Anamnese[]
 
   consulta    Consulta? @relation(fields: [consulta_id], references: [id])
-  consulta_id Int
+  consulta_id Int?
 }
 
 model Anamnese {
