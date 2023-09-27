@@ -1,7 +1,7 @@
 interface UserInterface {
-    id: number ;
     nome:string;
     senha: string;
+    email: string;
     ocupacao: string;
     create_agendamento: boolean;
     delete_agendamento: boolean;
