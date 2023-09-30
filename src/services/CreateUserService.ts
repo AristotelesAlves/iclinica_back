@@ -1,5 +1,6 @@
 import { UserInterface } from "../entities/UserInterface";
 import { prismaClient } from "../prisma";
+import { hash } from "bcrypt";
 
 class CreateUserService {
     
@@ -43,12 +44,14 @@ class CreateUserService {
         } catch (error) {
             return("Error ao procurar usuário" + error)
         }
+
+        const senhacript = await hash(senha, 10) 
     
         try {
             const user = await prismaClient.usuario.create({
                 data: {
                   nome,
-                  senha,
+                  senha: senhacript,
                   email,
                   ocupacao,
                   created_at: new Date(),
