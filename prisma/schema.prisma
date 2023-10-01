@@ -63,7 +63,7 @@ model Paciente {
   anamnese        Anamnese[]
 
   consulta    Consulta? @relation(fields: [consulta_id], references: [id])
-  consulta_id Int
+  consulta_id Int?
 }
 
 model Anamnese {
@@ -114,8 +114,9 @@ model Consulta {
 
 model Usuario {
   id         Int      @id @default(autoincrement())
-  nome       String
+  nome       String   @unique
   senha      String
+  email      String
   ocupacao   String
   created_at DateTime
   updated_at DateTime
@@ -136,10 +137,11 @@ model Controle_acesso {
   deleted_at DateTime
   is_active  Boolean
 
-  paciente    Controle_paciente[]
-  anamnese    Controle_anamnese[]
-  agendamento Controle_agendamento[]
-  consulta    Controle_consulta[]
+  paciente         Controle_paciente[]
+  anamnese         Controle_anamnese[]
+  agendamento      Controle_agendamento[]
+  consulta         Controle_consulta[]
+  usuario_controle Controle_usuario[]
 
   usuario    Usuario? @relation(fields: [usuario_id], references: [id])
   usuario_id Int?
@@ -187,4 +189,15 @@ model Controle_consulta {
 
   controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
   controle_id Int?
+}
+
+model Controle_usuario {
+  id             Int     @id @default(autoincrement())
+  create_usuario Boolean
+  update_usuario Boolean
+  read_usuario   Boolean
+  delete_usuario Boolean
+
+  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
+  controle_id Int
 }
