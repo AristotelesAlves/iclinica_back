@@ -114,7 +114,7 @@ model Consulta {
 
 model Usuario {
   id         Int      @id @default(autoincrement())
-  nome       String
+  nome       String   @unique
   senha      String
   email      String
   ocupacao   String
