@@ -3,7 +3,7 @@ interface PacienteInterface {
     nascimento_data: string;
     email: string;
     telefone: string;
-    cpf: Number;
+    cpf: number;
 }
 
 export { PacienteInterface }
