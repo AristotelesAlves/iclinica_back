@@ -29,7 +29,7 @@ class PacientesService {
                         {cpf},
                         {email}
                     ],
-                }
+                }    
             })
             
             if(searchPaciente){
@@ -43,12 +43,12 @@ class PacientesService {
         // Cadastra o paciente
         try {
             const paciente = await prismaClient.paciente.create({
-                data: {
-                    nome: nome,
-                    email: email,
-                    nascimento_data: nascimento_data,
+                data: { 
+                    nome,
+                    email,
+                    data_nascimento: nascimento_data,
                     telefone: telefone,
-                  cpf: cpf,
+                  cpf: Number(cpf),
                   created_at: new Date(),
                   deleted_at: new Date(),
                   is_active: true,

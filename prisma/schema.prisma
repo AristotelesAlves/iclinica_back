@@ -49,13 +49,13 @@ model Paciente {
   nome            String
   cpf             Int
   data_nascimento String
-  endereco        String
-  numero          Int
-  bairro          String
-  complemento     String
-  cep             Int
-  telefone        String
-  email           String
+  endereco        String? 
+  numero          Int?
+  bairro          String?
+  complemento     String?
+  cep             Int?
+  telefone        String?
+  email           String?
   created_at      DateTime
   updated_at      DateTime
   deleted_at      DateTime
