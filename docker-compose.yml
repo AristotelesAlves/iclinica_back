@@ -4,8 +4,9 @@ services:
     build: .
     command: npm run dev
     volumes:
-      - .:/usr/app/
-      - /usr/app/node_modules
+      - /usr/src/app
+      - /usr/src/app/node_modules
+      - /usr/src/app/node_modules/bcrypt/
     ports:
       - "3000:3000"
     depends_on:
@@ -13,18 +14,12 @@ services:
     environment:
       DATABASE_URL: postgres://todoapp@postgres/todos
   postgres:
-    image: postgres:13.5
+    image: postgres:10.20
     restart: always
     environment:
-<<<<<<< HEAD
       - POSTGRES_USER = "USUARIO DO BANCO"
       - POSTGRES_PASSWORD = "SENHA DO BANCO"
       - POSTGRES_DB = "NOME DO BANCO"
-=======
-      - POSTGRES_USER=   "USUARIO DO BANCO"
-      - POSTGRES_PASSWORD=  "SENHA DO BANCO"
-      - POSTGRES_DB= "NOME DO BANCO"
->>>>>>> server
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
