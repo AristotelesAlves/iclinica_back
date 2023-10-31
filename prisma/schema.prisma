@@ -49,16 +49,21 @@ model Paciente {
   nome            String
   cpf             Int
   data_nascimento String?
+  endereco        String
+  numero          Int
+  bairro          String
+  complemento     String
+  cep             Int
   telefone        String
   email           String?
   created_at      DateTime
   updated_at      DateTime
   deleted_at      DateTime
   is_active       Boolean
-  anamnese Anamnese[]
+  anamnese        Anamnese[]
 
-  consulta Consulta? @relation(fields: [consulta_id], references: [id])
-  consulta_id Int
+  consulta    Consulta? @relation(fields: [consulta_id], references: [id])
+  consulta_id Int?
 }
 
 model Anamnese {
