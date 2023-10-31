@@ -1,10 +1,79 @@
 import { UserInterface } from "../entities/UserInterface";
 import { prismaClient } from "../prisma";
-import { hash } from "bcrypt";
 
-class CreateUserService {
-    
-    async execute(props: UserInterface){     
+class UserService {
+    // lista de usuarios
+    async listUsers(){
+        const user = await prismaClient.usuario.findMany()
+        return user
+    }
+    // inativando usuario
+    async inactivUser(id: number){
+        const user = await prismaClient.usuario.update({
+            where:{
+                id: id
+            },
+            data:{
+                is_active: false,
+            }
+        })
+    }
+    // ativando usuario
+    async activUser(id: number){
+        const user = await prismaClient.usuario.update({
+            where:{
+                id: id
+            },
+            data:{
+                is_active: true,
+            }
+        })
+    }
+    // edição de usuarios
+    async updateUser(id:number, props: UserInterface){
+        const user = await prismaClient.usuario.findUnique({
+            where:{
+                id:id
+            },
+        })
+        
+        if(!user){
+            return 'Usuário não encontrado'
+        }
+        
+        const userUpdate = await prismaClient.usuario.update({
+            where:{
+                id: id,
+            },
+            data:{
+                email:props.email == '' ? user.email : props.email,
+                nome: props.nome == '' ? user.nome : props.nome,
+                ocupacao: props.ocupacao == '' ? user.ocupacao : props.ocupacao,
+                updated_at: new Date(),
+            }
+        })
+    }
+    // nova senha 
+    async newPassword(id:number, senha: string){
+        const user = await prismaClient.usuario.findUnique({
+            where: {id: id}
+        })
+
+        if(!user){
+            return 'Usuário não encontrado!'
+        }
+
+        const newPassword = await prismaClient.usuario.update({
+            where: {id: id},
+            data:{
+                senha
+            }
+        })
+
+        return 'Senha alterada com sucesso!'
+    }
+    // Criação de usuario
+    async create(props: UserInterface){     
         const {
             create_agendamento,
             create_anamnese,
@@ -44,7 +113,7 @@ class CreateUserService {
             return("Error ao procurar usuário" + error)
         }
 
-        const senhacript = await hash(senha, 10) 
+        const senhacript = senha;
     
         try {
             const user = await prismaClient.usuario.create({
@@ -122,4 +191,4 @@ class CreateUserService {
     }
 }
 
-export { CreateUserService }
+export { UserService }

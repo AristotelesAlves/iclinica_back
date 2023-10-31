@@ -1,6 +1,5 @@
 import { UserInterface } from "../entities/UserInterface";
 import { prismaClient } from "../prisma";
-import { compareSync } from "bcrypt"
 
 export class LoginService {
     async execute(props: any) {
@@ -22,7 +21,7 @@ export class LoginService {
 
             if (userAlreadyExists) {
                 const { senha } = props;
-                const match = compareSync(senha, userAlreadyExists.senha)
+                const match =  senha == userAlreadyExists.senha
 
                 if (!match) {
                     return ('Senha Incorreta')
@@ -30,7 +29,7 @@ export class LoginService {
 
                 const data = { ...userAlreadyExists }
                 delete data.senha;
-
+                
                 return data
             } else {
                 return("Usuário não encontrado")
