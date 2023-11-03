@@ -2,21 +2,12 @@ FROM node:lts-buster
  
 WORKDIR /usr/src/app
  
-COPY package.json ./package.json
-COPY package-lock.json ./package-lock.json
+COPY package*.json ./
  
-# Install dependencies
-RUN npm set progress=false \
-    && npm config set depth 0 \
-    && npm install \
-    && npm i typescript \
-    && npm uninstall bcrypt \
-    && npm i bcrypt
+RUN npm install
 
-RUN npm ci
-
-COPY . /usr/src/app
+COPY . .
  
-EXPOSE 3000
+EXPOSE 4444
  
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]

@@ -1,6 +1,5 @@
 import { UserInterface } from "../entities/UserInterface";
 import { prismaClient } from "../prisma";
-
 class UserService {
     // lista de usuarios
     async listUsers(){
@@ -17,6 +16,7 @@ class UserService {
                 is_active: false,
             }
         })
+        return 'Usuário ativado!'
     }
     // ativando usuario
     async activUser(id: number){
@@ -28,6 +28,7 @@ class UserService {
                 is_active: true,
             }
         })
+        return 'Usuário desativado!'
     }
     // edição de usuarios
     async updateUser(id:number, props: UserInterface){
@@ -52,7 +53,9 @@ class UserService {
                 updated_at: new Date(),
             }
         })
+        return {userUpdate}
     }
+    
     // nova senha 
     async newPassword(id:number, senha: string){
         const user = await prismaClient.usuario.findUnique({
@@ -190,5 +193,4 @@ class UserService {
         
     }
 }
-
 export { UserService }

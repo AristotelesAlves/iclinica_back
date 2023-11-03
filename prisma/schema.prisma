@@ -2,12 +2,12 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Estabelecimento {
@@ -47,13 +47,13 @@ model licenca {
 model Paciente {
   id              Int        @id @default(autoincrement())
   nome            String
-  cpf             Int
+  cpf             Int?
   data_nascimento String?
-  endereco        String
-  numero          Int
-  bairro          String
-  complemento     String
-  cep             Int
+  endereco        String?
+  numero          Int?
+  bairro          String?
+  complemento     String?
+  cep             Int?
   telefone        String
   email           String?
   created_at      DateTime

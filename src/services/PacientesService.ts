@@ -42,20 +42,20 @@ class PacientesService {
 
         // Cadastra o paciente
         try {
-            /*const paciente = await prismaClient.paciente.create({
+            const paciente = await prismaClient.paciente.create({
                 data: {
                     nome: nome,
                     email: email,
                     data_nascimento: nascimento_data,
                     telefone: telefone,
-                  cpf: cpf,
-                  created_at: new Date(),
-                  deleted_at: new Date(),
-                  is_active: true,
-                  updated_at: new Date()
+                    cpf: cpf,
+                    created_at: new Date(),
+                    deleted_at: new Date(),
+                    is_active: true,
+                    updated_at: new Date()
                 }
             });
-            return paciente;*/
+            return paciente;
         } catch (error) {
             console.error(error);
             return("Erro ao cadastrar paciente") 

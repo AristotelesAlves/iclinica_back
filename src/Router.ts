@@ -11,6 +11,7 @@ router.put('/paciente/edit', new PacientesController().edit);
 router.post('/paciente/create', new PacientesController().create);
 router.post('/paciente/active', new PacientesController().active);
 router.post('/paciente/inactive', new PacientesController().inative);
+
 router.post('/usuario', new CreateUserController().handle)
 router.post('/login', new LoginController().handle)
 

@@ -1,11 +1,11 @@
 import { Request, Response } from "express"
-import { UsersService } from "../services/UsersService"
+import { UserService } from "../services/UserService";
 
 class UsersController {
-    async handle(req: Request, res: Response){
-        const {} = req.body
-        const service = new UsersService();
-        const result = await service.execute();
+    async activeUser(req: Request, res: Response){
+        const {id} = req.body
+        const service = new UserService();
+        const result = await service.activUser(id);
         res.json(result);
 
     }

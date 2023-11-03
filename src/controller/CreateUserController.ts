@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { CreateUserService } from "../services/UserService";
-
+import { UserService } from "../services/UserService";
 
 class CreateUserController{
     async handle(req: Request, res: Response){
@@ -26,8 +25,8 @@ class CreateUserController{
             read_paciente,
             update_paciente
         } = req.body;
-        const service = new CreateUserService();
-        const result = await service.execute({
+        const service = new UserService();
+        const result = await service.create({
             create_agendamento,
             create_anamnese,
             delete_agendamento, 
