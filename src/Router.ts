@@ -15,4 +15,6 @@ router.post('/paciente/inactive', new PacientesController().inative);
 router.post('/usuario', new CreateUserController().handle)
 router.post('/login', new LoginController().handle)
 
+router.get('/test', () => 'Funcionand')
+
 export {router}

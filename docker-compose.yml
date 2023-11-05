@@ -8,7 +8,10 @@ services:
       - .:/usr/src/app
     ports:
       - "4444:4444"
-   
+    networks:
+      - my-network
+    depends_on:
+      - db
   db:
     container_name: banco_de_dados
     image: postgres:latest
@@ -18,7 +21,10 @@ services:
       - POSTGRES_DB=${DB}
     ports:
       - '5422:5432'
-
+    networks:
+      - my-network
 volumes:
   postgres:
 
+networks:
+  my-network:
