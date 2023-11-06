@@ -149,7 +149,7 @@ async function main(){
         data:{
             nome:'Alysson',
             telefone: '23213',
-            cpf:23131,
+            cpf:"23131",
             is_active: true,
             created_at:new Date(),
             updated_at:new Date(),
@@ -179,7 +179,7 @@ async function main(){
         data:{
             nome:'Caique',
             telefone: '39783',
-            cpf:2384,
+            cpf:"2384",
             is_active: true,
             created_at:new Date(),
             updated_at:new Date(),
@@ -209,7 +209,7 @@ async function main(){
         data:{
             nome:'João',
             telefone: '2135',
-            cpf:234284,
+            cpf:"234284",
             is_active: true,
             created_at:new Date(),
             updated_at:new Date(),

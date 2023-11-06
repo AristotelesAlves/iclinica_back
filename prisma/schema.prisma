@@ -3,6 +3,7 @@
 
 generator client {
   provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -47,7 +48,7 @@ model licenca {
 model Paciente {
   id              Int        @id @default(autoincrement())
   nome            String
-  cpf             Int?
+  cpf             String?
   data_nascimento String?
   endereco        String?
   numero          Int?

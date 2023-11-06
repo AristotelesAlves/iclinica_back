@@ -192,5 +192,41 @@ class UserService {
 
         
     }
+
+    async login(name:string, senha:string) {
+        try {
+            const userAlreadyExists = await prismaClient.usuario.findUnique({
+                where: {
+                    nome: name,
+                }, include: {
+                    controle: {
+                        include: {
+                            agendamento: true,
+                            anamnese: true,
+                            consulta: true,
+                            paciente: true,
+                        }
+                    }
+                }
+            })
+
+            if (userAlreadyExists) {
+                const match =  senha == userAlreadyExists.senha
+
+                if (!match) {
+                    return ('Senha Incorreta')
+                }
+
+                const data = { ...userAlreadyExists }
+                delete data.senha;
+                
+                return data
+            } else {
+                return("Usuário não encontrado")
+            }
+        } catch (error) {
+            throw new Error(error)
+        }
+    }
 }
 export { UserService }

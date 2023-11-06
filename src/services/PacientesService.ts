@@ -3,13 +3,24 @@ import { prismaClient } from "../prisma/index";
 
 class PacientesService {
     async showOne(id: number) {
-        const paciente = await prismaClient.paciente.findFirst({where: {id: id}});
-        return paciente
+        try {
+            const paciente = await prismaClient.paciente.findFirst({where: {id: id}});
+            if(!paciente){
+                return "Usuário não encontrado!"
+            }
+            return paciente
+        } catch (error) {
+            return "Falha ao buscar o paciente"
+        }
     }
 
     async list() {
-        const pacientes = await prismaClient.paciente.findMany()
-        return pacientes
+        try {
+            const pacientes = await prismaClient.paciente.findMany()
+            return pacientes
+        } catch (error) {
+            return (`Falha ao buscar lista de paciente`);
+        }
     }
 
     async create(props: PacienteInterface) {
@@ -73,21 +84,20 @@ class PacientesService {
             if(!searchPaciente){
                 return(`Paciente não encontrado.`);
             }
-        } catch (error) {
-            return(`Paciente não encontrado.`);
-        }
 
-        try {
+            const { nome, email, cpf, data_nascimento, telefone } = searchPaciente
+
+
             return await prismaClient.paciente.update({
                 where: {
                     id: id,
                   },
                   data: {
-                    nome: props.nome,
-                    email: props.email,
-                    cpf: props.cpf,
-                    data_nascimento: props.nascimento_data,
-                    telefone: props.telefone,
+                    nome: props.nome == "" ? nome : props.nome,
+                    email: props.email == "" ? email : props.email,
+                    cpf: props.cpf == "" ? cpf : props.cpf,
+                    data_nascimento: props.nascimento_data == "" ? data_nascimento : props.nascimento_data,
+                    telefone: props.telefone == "" ? telefone : props.telefone,
                   },
             });
         } catch (error) {
