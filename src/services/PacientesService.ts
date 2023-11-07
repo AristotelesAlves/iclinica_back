@@ -4,7 +4,16 @@ import { prismaClient } from "../prisma/index";
 class PacientesService {
     async showOne(id: number) {
         try {
-            const paciente = await prismaClient.paciente.findFirst({where: {id: id}});
+            const paciente = await prismaClient.paciente.findFirst(
+                {
+                    where: {
+                        id: id
+                    },
+                    include:{
+                        anamnese: true
+                    }
+                }
+            );
             if(!paciente){
                 return "Usuário não encontrado!"
             }
@@ -63,7 +72,10 @@ class PacientesService {
                     created_at: new Date(),
                     deleted_at: new Date(),
                     is_active: true,
-                    updated_at: new Date()
+                    updated_at: new Date(),
+                    anamnese:{
+                        
+                    }
                 }
             });
             return paciente;

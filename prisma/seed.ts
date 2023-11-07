@@ -1,29 +1,29 @@
 import { prismaClient } from "../src/prisma";
 
 async function main(){
-    const adm = await prismaClient.usuario.create({
-        data: {
-            nome: 'Aristoteles',
-            senha:'Aristoteles',
-            email:'Aristoteles@gmail.com',
-            ocupacao: 'adm',
-            is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
-                }
-            }
-        }
-    })
+    // const adm = await prismaClient.usuario.create({
+    //     data: {
+    //         nome: 'Aristoteles',
+    //         senha:'Aristoteles',
+    //         email:'Aristoteles@gmail.com',
+    //         ocupacao: 'adm',
+    //         is_active: true,
+    //         created_at: new Date(),
+    //         deleted_at: new Date(),
+    //         updated_at: new Date(),
+    //     },
+    //     include:{
+    //         controle:{
+    //             include:{
+    //                 agendamento: true,
+    //                 anamnese: true,
+    //                 consulta: true,
+    //                 paciente: true,
+    //                 usuario_controle: true
+    //             }
+    //         }
+    //     }
+    // })
 
     const medico01 = await prismaClient.usuario.create({
         data: {
@@ -35,15 +35,12 @@ async function main(){
             created_at: new Date(),
             deleted_at: new Date(),
             updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
+            controle_acesso:{
+                create:{
+                    created_at:new Date(),
+                    deleted_at: new Date(),
+                    is_active: true,
+                    updated_at: new Date(),
                 }
             }
         }
@@ -59,91 +56,88 @@ async function main(){
             created_at: new Date(),
             deleted_at: new Date(),
             updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
+            controle_acesso:{
+                create:{
+                    created_at:new Date(),
+                    deleted_at: new Date(),
+                    is_active: true,
+                    updated_at: new Date(),
                 }
             }
         }
     })
 
-    const medico03 = await prismaClient.usuario.create({
-        data: {
-            nome: 'Daniel',
-            senha:'Daniel',
-            email:'Daniel@gmail.com',
-            ocupacao: 'medico',
-            is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
-                }
-            }
-        }
-    })
+    // const medico03 = await prismaClient.usuario.create({
+    //     data: {
+    //         nome: 'Daniel',
+    //         senha:'Daniel',
+    //         email:'Daniel@gmail.com',
+    //         ocupacao: 'medico',
+    //         is_active: true,
+    //         created_at: new Date(),
+    //         deleted_at: new Date(),
+    //         updated_at: new Date(),
+    //     },
+    //     include:{
+    //         controle:{
+    //             include:{
+    //                 agendamento: true,
+    //                 anamnese: true,
+    //                 consulta: true,
+    //                 paciente: true,
+    //                 usuario_controle: true
+    //             }
+    //         }
+    //     }
+    // })
 
-    const recepcionista01 = await prismaClient.usuario.create({
-        data: {
-            nome: 'Raimunda',
-            senha:'Raimunda',
-            email:'Raimunda@gmail.com',
-            ocupacao: 'recepcionista',
-            is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
-                }
-            }
-        }
-    })
+    // const recepcionista01 = await prismaClient.usuario.create({
+    //     data: {
+    //         nome: 'Raimunda',
+    //         senha:'Raimunda',
+    //         email:'Raimunda@gmail.com',
+    //         ocupacao: 'recepcionista',
+    //         is_active: true,
+    //         created_at: new Date(),
+    //         deleted_at: new Date(),
+    //         updated_at: new Date(),
+    //     },
+    //     include:{
+    //         controle:{
+    //             include:{
+    //                 agendamento: true,
+    //                 anamnese: true,
+    //                 consulta: true,
+    //                 paciente: true,
+    //                 usuario_controle: true
+    //             }
+    //         }
+    //     }
+    // })
 
-    const recepcionista02 = await prismaClient.usuario.create({
-        data: {
-            nome: 'Raquel',
-            senha:'Raquel',
-            email:'Raquel@gmail.com',
-            ocupacao: 'recepcionista',
-            is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-        },
-        include:{
-            controle:{
-                include:{
-                    agendamento: true,
-                    anamnese: true,
-                    consulta: true,
-                    paciente: true,
-                    usuario_controle: true
-                }
-            }
-        }
-    })
+    // const recepcionista02 = await prismaClient.usuario.create({
+    //     data: {
+    //         nome: 'Raquel',
+    //         senha:'Raquel',
+    //         email:'Raquel@gmail.com',
+    //         ocupacao: 'recepcionista',
+    //         is_active: true,
+    //         created_at: new Date(),
+    //         deleted_at: new Date(),
+    //         updated_at: new Date(),
+    //     },
+    //     include:{
+    //         controle:{
+    //             include:{
+    //                 agendamento: true,
+    //                 anamnese: true,
+    //                 consulta: true,
+    //                 paciente: true,
+    //                 usuario_controle: true
+    //             }
+    //         }
+    //     }
+    // })
 
     const paciente01 = await prismaClient.paciente.create({
         data:{
@@ -234,6 +228,120 @@ async function main(){
             }
         }
     })
+
+    const agenda01 = await prismaClient.agendamento.create({
+        data:{
+            created_at: new Date(),
+            deleted_at: new Date(),
+            updated_at: new Date(),
+            data_de_agendado: new Date(),
+            observacao: 'Fiado',
+            status:'agendado',
+            medico:{
+                connect:{
+                    id:2
+                }
+            },
+            consulta:{
+                create:{
+                    convenio:"",
+                    diagnostico:"",
+                    prescricao: "",
+                    status:"agendado",
+                    created_at: new Date(),
+                    deleted_at: new Date(),
+                    updated_at: new Date(),
+                    paciente:{
+                        connect:{
+                            id:3
+                        }
+                    },
+                    medico:{
+                        connect:{
+                            id:2
+                        }
+                    },
+                }
+            }
+        }
+    })
+    
+    const agenda02 = await prismaClient.agendamento.create({
+        data:{
+            created_at: new Date(),
+            deleted_at: new Date(),
+            updated_at: new Date(),
+            data_de_agendado: new Date(),
+            observacao: 'Pagar na recepção',
+            status:'agendado',
+            medico:{
+                connect:{
+                    id: 2
+                }
+            },
+            consulta:{
+                create:{
+                    convenio:"",
+                    diagnostico:"",
+                    prescricao: "",
+                    status:"agendado",
+                    created_at: new Date(),
+                    deleted_at: new Date(),
+                    updated_at: new Date(),
+                    medico:{
+                        connect:{
+                            id: 2
+                        },
+                    },
+                    paciente:{
+                        connect:{
+                            id:1
+                        }
+                    },
+                }
+            }
+        }
+    })
+
+
+    const agenda03 = await prismaClient.agendamento.create({
+        data:{
+            created_at: new Date(),
+            deleted_at: new Date(),
+            updated_at: new Date(),
+            data_de_agendado: new Date(),
+            observacao: 'Pagamento adiantado',
+            status:'agendado',
+            medico:{
+                connect:{
+                    id:2
+                }
+            },
+            consulta:{
+                create:{
+                    convenio:"",
+                    diagnostico:"",
+                    prescricao: "",
+                    status:"agendado",
+                    created_at: new Date(),
+                    deleted_at: new Date(),
+                    updated_at: new Date(),
+                    paciente:{
+                        connect:{
+                            id:2
+                        }
+                    },
+                    medico:{
+                        connect:{
+                            id:2
+                        }
+                    },
+                }
+            }
+        }
+    })
+    
+    
 }
 
 main()

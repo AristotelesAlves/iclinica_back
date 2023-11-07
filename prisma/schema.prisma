@@ -10,41 +10,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-model Estabelecimento {
-  id                   String   @id @default(uuid())
-  razao_social         String
-  nome_fantasia        String
-  endereco             String
-  numero               String
-  bairro               String
-  complemento          String
-  uf                   String
-  cidade               String
-  cep                  String
-  cnpj                 String   @unique
-  inscricao_estadual   String
-  telefone             String
-  email                String   @unique
-  nome_responsavel     String
-  telefone_responsavel String
-  email_responsavel    String
-  usuarios_de_acesso   Int
-  created_at           DateTime
-  updated_at           DateTime
-  deleted_at           DateTime
-  is_active            Boolean
-}
-
-model licenca {
-  id              String   @id @default(uuid())
-  created_at      DateTime
-  updated_at      DateTime
-  deleted_at      DateTime
-  data_vencimento DateTime
-  is_active       Boolean
-}
-
 model Paciente {
   id              Int        @id @default(autoincrement())
   nome            String
@@ -61,31 +26,33 @@ model Paciente {
   updated_at      DateTime
   deleted_at      DateTime
   is_active       Boolean
-  anamnese        Anamnese[]
 
-  consulta    Consulta? @relation(fields: [consulta_id], references: [id])
-  consulta_id Int?
+  agendamento Agendamento[]
+  constulta Consulta[]
+  anamnese Anamnese []
+
 }
 
 model Anamnese {
   id                             Int     @id @default(autoincrement())
-  infeccao_urinaria              Boolean
-  dst                            String
-  pedra_nos_rins                 String
-  problema_nos_testiculos        String
-  historico_de_cancer_na_familia String
-  doenca_cronica                 String
-  utiliza_remedios               String
-  fumante                        String
-  bebidas_alcoolicas             String
-  droga                          String
+  infeccao_urinaria              Boolean?
+  dst                            String?
+  pedra_nos_rins                 String?
+  problema_nos_testiculos        String?
+  historico_de_cancer_na_familia String?
+  doenca_cronica                 String?
+  utiliza_remedios               String?
+  fumante                        String?
+  bebidas_alcoolicas             String?
+  droga                          String?
 
   created_at DateTime
   updated_at DateTime
   deleted_at DateTime
   is_active  Boolean
 
-  paciente    Paciente? @relation(fields: [paciente_id], references: [id])
+
+  paciente_ Paciente @relation(fields: [paciente_id], references: [id])
   paciente_id Int
 }
 
@@ -97,6 +64,13 @@ model Agendamento {
   created_at       DateTime
   updated_at       DateTime
   deleted_at       DateTime
+
+  
+  medico Usuario @relation(fields: [medico_id], references: [id])
+  medico_id Int
+
+  paciente Paciente @relation(fields: [paciente_id], references: [id])
+  paciente_id Int
 }
 
 model Consulta {
@@ -109,10 +83,12 @@ model Consulta {
   updated_at  DateTime
   deleted_at  DateTime
 
-  usuario  Usuario[]
-  paciente Paciente[]
-}
+  medico Usuario @relation(fields: [medico_id],references: [id])
+  medico_id Int
+  paciente Paciente @relation(fields: [paciente_id], references: [id])
+  paciente_id Int
 
+}
 model Usuario {
   id         Int      @id @default(autoincrement())
   nome       String   @unique
@@ -124,28 +100,13 @@ model Usuario {
   deleted_at DateTime
   is_active  Boolean
 
-  controle Controle_acesso[]
-
-  Consulta    Consulta? @relation(fields: [Consulta_id], references: [id])
-  Consulta_id Int?
-}
-
-model Controle_acesso {
-  id Int @id @default(autoincrement())
-
-  created_at DateTime
-  updated_at DateTime
-  deleted_at DateTime
-  is_active  Boolean
-
-  paciente         Controle_paciente[]
-  anamnese         Controle_anamnese[]
-  agendamento      Controle_agendamento[]
-  consulta         Controle_consulta[]
-  usuario_controle Controle_usuario[]
-
-  usuario    Usuario? @relation(fields: [usuario_id], references: [id])
-  usuario_id Int?
+  agendamento Agendamento[]
+  consulta Consulta[]
+  controle_paciente Controle_paciente[]
+  controle_anamnese Controle_anamnese[]
+  controle_agendamento Controle_agendamento[]
+  controle_consulta Controle_consulta[]
+  controle_usuario Controle_usuario[]
 }
 
 model Controle_paciente {
@@ -154,8 +115,9 @@ model Controle_paciente {
   create_paciente Boolean
   update_paciente Boolean
   delete_paciente Boolean
-  controle        Controle_acesso @relation(fields: [controle_id], references: [id])
-  controle_id     Int
+  
+  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario_id Int @unique
 }
 
 model Controle_anamnese {
@@ -166,8 +128,8 @@ model Controle_anamnese {
   read_anamnese   Boolean
   delete_anamnese Boolean
 
-  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
-  controle_id Int?
+  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario_id Int @unique
 }
 
 model Controle_agendamento {
@@ -177,8 +139,10 @@ model Controle_agendamento {
   update_agendamento Boolean
   read_agendamento   Boolean
   delete_agendamento Boolean
-  controle           Controle_acesso? @relation(fields: [control_id], references: [id])
-  control_id         Int?
+
+  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario_id Int @unique
+  
 }
 
 model Controle_consulta {
@@ -188,8 +152,8 @@ model Controle_consulta {
   read_consulta   Boolean
   delete_consulta Boolean
 
-  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
-  controle_id Int?
+  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario_id Int @unique
 }
 
 model Controle_usuario {
@@ -199,6 +163,6 @@ model Controle_usuario {
   read_usuario   Boolean
   delete_usuario Boolean
 
-  controle    Controle_acesso? @relation(fields: [controle_id], references: [id])
-  controle_id Int
+  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario_id Int @unique
 }

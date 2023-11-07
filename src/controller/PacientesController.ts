@@ -67,9 +67,9 @@ class PacientesController {
     async showOne(req: Request, res: Response) {
         const {
             id,
-        } = req.body;
+        } = req.params;
         const service = new PacientesService();
-        const result = await service.showOne(id);
+        const result = await service.showOne(Number(id));
         res.json(result);
     }
 }
