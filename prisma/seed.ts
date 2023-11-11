@@ -1,346 +1,225 @@
 import { prismaClient } from "../src/prisma";
 
 async function main(){
-    // const adm = await prismaClient.usuario.create({
-    //     data: {
-    //         nome: 'Aristoteles',
-    //         senha:'Aristoteles',
-    //         email:'Aristoteles@gmail.com',
-    //         ocupacao: 'adm',
-    //         is_active: true,
-    //         created_at: new Date(),
-    //         deleted_at: new Date(),
-    //         updated_at: new Date(),
-    //     },
-    //     include:{
-    //         controle:{
-    //             include:{
-    //                 agendamento: true,
-    //                 anamnese: true,
-    //                 consulta: true,
-    //                 paciente: true,
-    //                 usuario_controle: true
-    //             }
-    //         }
-    //     }
-    // })
-
-    const medico01 = await prismaClient.usuario.create({
-        data: {
-            nome: 'Pierre',
-            senha:'Pierre',
-            email:'Pierre@gmail.com',
-            ocupacao: 'medico',
+    const joao = await prismaClient.paciente.create({
+        data:{
+            nome: "João Gomes",
+            cpf: "111.222.333-44",
+            data_nascimento: "1990-01-15",
+            endereco: "Rua das Flores",
+            numero: 123,
+            bairro: "Centro",
+            complemento: "Apto 2B",
+            cep: 54321,
+            telefone: "(11) 98765-1111",
+            email: "usuario1@example.com",
+            created_at: "2023-11-07T14:00:00Z",
+            updated_at: "2023-11-07T15:45:00Z",
+            deleted_at: null,
             is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-            controle_acesso:{
+            anamnese:{
                 create:{
-                    created_at:new Date(),
-                    deleted_at: new Date(),
+                    created_at: "2023-11-07T15:45:00Z",
+                    deleted_at: "2023-11-07T15:45:00Z",
                     is_active: true,
-                    updated_at: new Date(),
+                    updated_at: "2023-11-07T15:45:00Z",
+                    bebidas_alcoolicas: "não",
+                    doenca_cronica: "não",
+                    droga: "não",
+                    dst: "não",
+                    fumante: "não",
+                    historico_de_cancer_na_familia: "não",
+                    infeccao_urinaria: false,
+                    pedra_nos_rins: "não",
+                    problema_nos_testiculos: "não",
+                    utiliza_remedios: "não",
                 }
             }
         }
     })
 
-    const medico02 = await prismaClient.usuario.create({
-        data: {
-            nome: 'Olavo',
-            senha:'Olavo',
-            email:'Olavo@gmail.com',
-            ocupacao: 'medico',
+    const maria = await prismaClient.paciente.create({
+        data:{
+            nome: "Maria Fernandez",
+            cpf: "111.222.333-44",
+            data_nascimento: "1990-01-15",
+            endereco: "Rua das Flores",
+            numero: 123,
+            bairro: "Centro",
+            complemento: "Apto 2B",
+            cep: 54321,
+            telefone: "(11) 98765-1111",
+            email: "usuario1@example.com",
+            created_at: "2023-11-07T14:00:00Z",
+            updated_at: "2023-11-07T15:45:00Z",
+            deleted_at: null,
             is_active: true,
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-            controle_acesso:{
+            anamnese:{
                 create:{
-                    created_at:new Date(),
-                    deleted_at: new Date(),
+                    created_at: "2023-11-07T15:45:00Z",
+                    deleted_at: "2023-11-07T15:45:00Z",
                     is_active: true,
-                    updated_at: new Date(),
-                }
-            }
-        }
-    })
-
-    // const medico03 = await prismaClient.usuario.create({
-    //     data: {
-    //         nome: 'Daniel',
-    //         senha:'Daniel',
-    //         email:'Daniel@gmail.com',
-    //         ocupacao: 'medico',
-    //         is_active: true,
-    //         created_at: new Date(),
-    //         deleted_at: new Date(),
-    //         updated_at: new Date(),
-    //     },
-    //     include:{
-    //         controle:{
-    //             include:{
-    //                 agendamento: true,
-    //                 anamnese: true,
-    //                 consulta: true,
-    //                 paciente: true,
-    //                 usuario_controle: true
-    //             }
-    //         }
-    //     }
-    // })
-
-    // const recepcionista01 = await prismaClient.usuario.create({
-    //     data: {
-    //         nome: 'Raimunda',
-    //         senha:'Raimunda',
-    //         email:'Raimunda@gmail.com',
-    //         ocupacao: 'recepcionista',
-    //         is_active: true,
-    //         created_at: new Date(),
-    //         deleted_at: new Date(),
-    //         updated_at: new Date(),
-    //     },
-    //     include:{
-    //         controle:{
-    //             include:{
-    //                 agendamento: true,
-    //                 anamnese: true,
-    //                 consulta: true,
-    //                 paciente: true,
-    //                 usuario_controle: true
-    //             }
-    //         }
-    //     }
-    // })
-
-    // const recepcionista02 = await prismaClient.usuario.create({
-    //     data: {
-    //         nome: 'Raquel',
-    //         senha:'Raquel',
-    //         email:'Raquel@gmail.com',
-    //         ocupacao: 'recepcionista',
-    //         is_active: true,
-    //         created_at: new Date(),
-    //         deleted_at: new Date(),
-    //         updated_at: new Date(),
-    //     },
-    //     include:{
-    //         controle:{
-    //             include:{
-    //                 agendamento: true,
-    //                 anamnese: true,
-    //                 consulta: true,
-    //                 paciente: true,
-    //                 usuario_controle: true
-    //             }
-    //         }
-    //     }
-    // })
-
-    const paciente01 = await prismaClient.paciente.create({
-        data:{
-            nome:'Alysson',
-            telefone: '23213',
-            cpf:"23131",
-            is_active: true,
-            created_at:new Date(),
-            updated_at:new Date(),
-            deleted_at:new Date(),
-            anamnese: {
-                create:{
-                    bebidas_alcoolicas: 'sim, uma dose a cada 3h',
-                    doenca_cronica: 'não',
-                    dst: 'sim, Aids',
-                    droga: 'sim, lolo, cocaina, k9, maconha, heroina',
+                    updated_at: "2023-11-07T15:45:00Z",
+                    bebidas_alcoolicas: "não",
+                    doenca_cronica: "não",
+                    droga: "não",
+                    dst: "não",
+                    fumante: "não",
+                    historico_de_cancer_na_familia: "não",
                     infeccao_urinaria: false,
-                    fumante: 'não',
-                    historico_de_cancer_na_familia: 'não',
-                    pedra_nos_rins: 'não',
-                    problema_nos_testiculos: 'não',
-                    utiliza_remedios: 'não',
-                    is_active:true,
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
+                    pedra_nos_rins: "não",
+                    problema_nos_testiculos: "não",
+                    utiliza_remedios: "não",
                 }
             }
         }
     })
 
-    const paciente02 = await prismaClient.paciente.create({
+    const olavo = await prismaClient.paciente.create({
         data:{
-            nome:'Caique',
-            telefone: '39783',
-            cpf:"2384",
+            nome: "Olavo",
+            cpf: "111.222.333-44",
+            data_nascimento: "1990-01-15",
+            endereco: "Rua das Flores",
+            numero: 123,
+            bairro: "Centro",
+            complemento: "Apto 2B",
+            cep: 54321,
+            telefone: "(11) 98765-1111",
+            email: "usuario1@example.com",
+            created_at: "2023-11-07T14:00:00Z",
+            updated_at: "2023-11-07T15:45:00Z",
+            deleted_at: null,
             is_active: true,
-            created_at:new Date(),
-            updated_at:new Date(),
-            deleted_at:new Date(),
-            anamnese: {
+            anamnese:{
                 create:{
-                    bebidas_alcoolicas: 'sim, uma dose a cada 3h',
-                    doenca_cronica: 'não',
-                    dst: 'sim, Aids',
-                    droga: 'sim, lolo, cocaina, k9, maconha, heroina',
+                    created_at: "2023-11-07T15:45:00Z",
+                    deleted_at: "2023-11-07T15:45:00Z",
+                    is_active: true,
+                    updated_at: "2023-11-07T15:45:00Z",
+                    bebidas_alcoolicas: "não",
+                    doenca_cronica: "não",
+                    droga: "não",
+                    dst: "não",
+                    fumante: "não",
+                    historico_de_cancer_na_familia: "não",
                     infeccao_urinaria: false,
-                    fumante: 'não',
-                    historico_de_cancer_na_familia: 'não',
-                    pedra_nos_rins: 'não',
-                    problema_nos_testiculos: 'não',
-                    utiliza_remedios: 'não',
-                    is_active:true,
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
+                    pedra_nos_rins: "não",
+                    problema_nos_testiculos: "não",
+                    utiliza_remedios: "não",
                 }
             }
         }
     })
 
-    const paciente03 = await prismaClient.paciente.create({
+    const Drpierre = await prismaClient.usuario.create({
         data:{
-            nome:'João',
-            telefone: '2135',
-            cpf:"234284",
-            is_active: true,
-            created_at:new Date(),
-            updated_at:new Date(),
-            deleted_at:new Date(),
-            anamnese: {
-                create:{
-                    bebidas_alcoolicas: 'sim, uma dose a cada 3h',
-                    doenca_cronica: 'não',
-                    dst: 'sim, Aids',
-                    droga: 'sim, lolo, cocaina, k9, maconha, heroina',
-                    infeccao_urinaria: false,
-                    fumante: 'não',
-                    historico_de_cancer_na_familia: 'não',
-                    pedra_nos_rins: 'não',
-                    problema_nos_testiculos: 'não',
-                    utiliza_remedios: 'não',
-                    is_active:true,
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
-                }
-            }
-        }
-    })
-
-    const agenda01 = await prismaClient.agendamento.create({
-        data:{
+            nome:"Dr.Pierre",
+            email:"pierre@prisma.com",
+            ocupacao:"Medico",
+            senha:"pierre",
+            updated_at: new Date(),
             created_at: new Date(),
             deleted_at: new Date(),
-            updated_at: new Date(),
-            data_de_agendado: new Date(),
-            observacao: 'Fiado',
-            status:'agendado',
-            medico:{
-                connect:{
-                    id:2
+            is_active: true,
+            controle_agendamento:{
+                create:{
+                    create_agendamento: false,
+                    delete_agendamento: false,
+                    read_agendamento: true,
+                    update_agendamento: false
                 }
             },
-            consulta:{
+            controle_anamnese: {
                 create:{
-                    convenio:"",
-                    diagnostico:"",
-                    prescricao: "",
-                    status:"agendado",
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
-                    paciente:{
-                        connect:{
-                            id:3
-                        }
-                    },
-                    medico:{
-                        connect:{
-                            id:2
-                        }
-                    },
-                }
-            }
-        }
-    })
-    
-    const agenda02 = await prismaClient.agendamento.create({
-        data:{
-            created_at: new Date(),
-            deleted_at: new Date(),
-            updated_at: new Date(),
-            data_de_agendado: new Date(),
-            observacao: 'Pagar na recepção',
-            status:'agendado',
-            medico:{
-                connect:{
-                    id: 2
+                    create_anamnese: true,
+                    delete_anamnese: true,
+                    read_anamnese: true,
+                    update_anamnese: true
                 }
             },
-            consulta:{
+            controle_consulta: {
+                create: {
+                    create_consulta: true,
+                    delete_consulta: true,
+                    read_consulta: true,
+                    update_consulta: true
+                }
+            },
+            controle_paciente: {
                 create:{
-                    convenio:"",
-                    diagnostico:"",
-                    prescricao: "",
-                    status:"agendado",
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
-                    medico:{
-                        connect:{
-                            id: 2
-                        },
-                    },
-                    paciente:{
-                        connect:{
-                            id:1
-                        }
-                    },
+                    create_paciente: true,
+                    delete_paciente: true,
+                    read_paciente: true,
+                    update_paciente: true
+                }
+            },
+            controle_usuario: {
+                create:{
+                    create_usuario: false,
+                    delete_usuario: false,
+                    read_usuario: true,
+                    update_usuario: false
                 }
             }
+            
         }
     })
 
-
-    const agenda03 = await prismaClient.agendamento.create({
+    const Dralysson = await prismaClient.usuario.create({
         data:{
+            nome:"Dr.Alysson",
+            email:"pierre@prisma.com",
+            ocupacao:"Medico",
+            senha:"pierre",
+            updated_at: new Date(),
             created_at: new Date(),
             deleted_at: new Date(),
-            updated_at: new Date(),
-            data_de_agendado: new Date(),
-            observacao: 'Pagamento adiantado',
-            status:'agendado',
-            medico:{
-                connect:{
-                    id:2
+            is_active: true,
+            controle_agendamento:{
+                create:{
+                    create_agendamento: false,
+                    delete_agendamento: false,
+                    read_agendamento: true,
+                    update_agendamento: false
                 }
             },
-            consulta:{
+            controle_anamnese: {
                 create:{
-                    convenio:"",
-                    diagnostico:"",
-                    prescricao: "",
-                    status:"agendado",
-                    created_at: new Date(),
-                    deleted_at: new Date(),
-                    updated_at: new Date(),
-                    paciente:{
-                        connect:{
-                            id:2
-                        }
-                    },
-                    medico:{
-                        connect:{
-                            id:2
-                        }
-                    },
+                    create_anamnese: true,
+                    delete_anamnese: true,
+                    read_anamnese: true,
+                    update_anamnese: true
+                }
+            },
+            controle_consulta: {
+                create: {
+                    create_consulta: true,
+                    delete_consulta: true,
+                    read_consulta: true,
+                    update_consulta: true
+                }
+            },
+            controle_paciente: {
+                create:{
+                    create_paciente: true,
+                    delete_paciente: true,
+                    read_paciente: true,
+                    update_paciente: true
+                }
+            },
+            controle_usuario: {
+                create:{
+                    create_usuario: false,
+                    delete_usuario: false,
+                    read_usuario: true,
+                    update_usuario: false
                 }
             }
+            
         }
     })
-    
+
     
 }
 

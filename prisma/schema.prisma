@@ -117,7 +117,7 @@ model Controle_paciente {
   delete_paciente Boolean
   
   usuario  Usuario @relation(fields: [id], references: [id])
-  usuario_id Int @unique
+  usuario_id Int?
 }
 
 model Controle_anamnese {
@@ -129,7 +129,7 @@ model Controle_anamnese {
   delete_anamnese Boolean
 
   usuario  Usuario @relation(fields: [id], references: [id])
-  usuario_id Int @unique
+  usuario_id Int?
 }
 
 model Controle_agendamento {
@@ -141,7 +141,7 @@ model Controle_agendamento {
   delete_agendamento Boolean
 
   usuario  Usuario @relation(fields: [id], references: [id])
-  usuario_id Int @unique
+  usuario_id Int?
   
 }
 
@@ -153,7 +153,7 @@ model Controle_consulta {
   delete_consulta Boolean
 
   usuario  Usuario @relation(fields: [id], references: [id])
-  usuario_id Int @unique
+  usuario_id Int?
 }
 
 model Controle_usuario {
@@ -164,5 +164,5 @@ model Controle_usuario {
   delete_usuario Boolean
 
   usuario  Usuario @relation(fields: [id], references: [id])
-  usuario_id Int @unique
+  usuario_id Int?
 }

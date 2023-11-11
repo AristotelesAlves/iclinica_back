@@ -19,6 +19,10 @@ interface UserInterface {
     delete_paciente: boolean;
     read_paciente: boolean;
     update_paciente: boolean;
+    create_usuario: boolean;
+    delete_usuario: boolean;
+    read_usuario: boolean;
+    update_usuario: boolean;
 }
 
 export { UserInterface }

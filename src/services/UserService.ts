@@ -6,32 +6,39 @@ class UserService {
         const user = await prismaClient.usuario.findMany()
         return user
     }
-    // inativando usuario
-    async inactivUser(id: number){
-        const user = await prismaClient.usuario.update({
-            where:{
-                id: id
-            },
-            data:{
-                is_active: false,
-            }
-        })
-        return 'Usuário ativado!'
-    }
+    
     // ativando usuario
-    async activUser(id: number){
-        const user = await prismaClient.usuario.update({
-            where:{
-                id: id
-            },
-            data:{
-                is_active: true,
+    async activUser(id: number, status: boolean){
+        try {
+            const user = await prismaClient.usuario.findUnique({
+                where:{
+                    id
+                }
+            })
+            
+            if(!user){
+                return
             }
-        })
-        return 'Usuário desativado!'
+            
+            const updateStatus = await prismaClient.usuario.update({
+                where:{
+                    id
+                },
+                data:{
+                    is_active: status,
+                    updated_at: new Date(),
+                }
+            })
+
+            return `Usuário ${status == true ? 'ativado' : 'desativado'} com sucesso!`
+
+        } catch (error) {
+            console.error(error);
+            return 'erro no processo de ativar/desativar usuário'
+        }
     }
     // edição de usuarios
-    async updateUser(id:number, props: UserInterface){
+    async updateUser(id:number, nome: string, email: string, ocupacao: string){
         const user = await prismaClient.usuario.findUnique({
             where:{
                 id:id
@@ -47,9 +54,9 @@ class UserService {
                 id: id,
             },
             data:{
-                email:props.email == '' ? user.email : props.email,
-                nome: props.nome == '' ? user.nome : props.nome,
-                ocupacao: props.ocupacao == '' ? user.ocupacao : props.ocupacao,
+                email: email == '' ? user.email : email,
+                nome: nome == '' ? user.nome : nome,
+                ocupacao: ocupacao == '' ? user.ocupacao : ocupacao,
                 updated_at: new Date(),
             }
         })
@@ -97,7 +104,11 @@ class UserService {
             create_paciente,
             delete_paciente,
             read_paciente,
-            update_paciente} = props
+            update_paciente,
+            create_usuario,
+            delete_usuario,
+            read_usuario,
+            update_usuario} = props
         try {
             const searchUser = await prismaClient.usuario.findFirst({
                 where:{
@@ -113,7 +124,7 @@ class UserService {
                 return(`Usuário já cadastrado ${result}`)
             }
         } catch (error) {
-            return("Error ao procurar usuário" + error)
+            return("Error ao procurar usuário " + error)
         }
 
         const senhacript = senha;
@@ -129,58 +140,46 @@ class UserService {
                   deleted_at: new Date(),
                   is_active: true,
                   updated_at: new Date(),
-                  controle: {
-                    create: [
-                        {
-                            created_at: new Date(),
-                            deleted_at: new Date(),
-                            is_active: true,
-                            updated_at: new Date(),
-    
-                            agendamento: {
-                                create: {
-                                    create_agendamento,
-                                    delete_agendamento,
-                                    read_agendamento,
-                                    update_agendamento
-                                }
-                            },
-                            anamnese: {
-                                create: {
-                                    create_anamnese,
-                                    delete_anamnese,
-                                    read_anamnese,
-                                    update_anamnese,
-                                }
-                            },
-                            consulta: {
-                                create:{
-                                    create_consulta,
-                                    delete_consulta,
-                                    read_consulta,
-                                    update_consulta
-                                }
-                            },
-                            paciente: {
-                                create: {
-                                    create_paciente,
-                                    delete_paciente,
-                                    read_paciente,
-                                    update_paciente
-                                }
-                            }
-                        }
-                    ]
-                  }
-                },include: {
-                    controle:{
-                        include:{
-                            agendamento: true,
-                            anamnese: true,
-                            consulta: true,
-                            paciente: true,
-                        }
+                  controle_agendamento: {
+                    create:{
+                        create_agendamento,
+                        delete_agendamento,
+                        read_agendamento,
+                        update_agendamento
                     }
+                  },
+                  controle_anamnese: {
+                    create:{
+                        create_anamnese,
+                        delete_anamnese,
+                        read_anamnese,
+                        update_anamnese
+                    }
+                  },
+                  controle_consulta: {
+                    create:{
+                        create_consulta,
+                        delete_consulta,
+                        read_consulta,
+                        update_consulta
+                    }
+                  },
+                  controle_paciente: {
+                    create:{
+                        create_paciente,
+                        delete_paciente,
+                        read_paciente,
+                        update_paciente
+                    }
+                  },
+                  controle_usuario: {
+                    create: {
+                        create_usuario,
+                        delete_usuario,
+                        read_usuario,
+                        update_usuario
+                    }
+                  }
                 }
             });
             return user
@@ -193,20 +192,18 @@ class UserService {
         
     }
 
-    async login(name:string, senha:string) {
+    // login
+    async login(nome:string, senha:string) {
         try {
             const userAlreadyExists = await prismaClient.usuario.findUnique({
                 where: {
-                    nome: name,
+                    nome,
                 }, include: {
-                    controle: {
-                        include: {
-                            agendamento: true,
-                            anamnese: true,
-                            consulta: true,
-                            paciente: true,
-                        }
-                    }
+                    controle_agendamento: true,
+                    controle_anamnese: true,
+                    controle_consulta: true,
+                    controle_paciente: true,
+                    controle_usuario: true
                 }
             })
 
@@ -228,5 +225,24 @@ class UserService {
             throw new Error(error)
         }
     }
+
+    //
+    async showOne(id:number){
+        try {
+            const user = await prismaClient.usuario.findUnique({where:{id}})
+            
+            if(user){
+                const data = { ...user }
+                delete data.senha
+                return data
+            }else {
+                return "Usuário não encontrado"
+            }
+        } catch (error) {
+            console.error(error)
+            return "Erro ao buscar usuário"
+        }
+    }
+
 }
 export { UserService }
