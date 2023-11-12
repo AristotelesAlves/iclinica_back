@@ -2,9 +2,21 @@ import { UserInterface } from "../entities/UserInterface";
 import { prismaClient } from "../prisma";
 class UserService {
     // lista de usuarios
-    async listUsers(){
-        const user = await prismaClient.usuario.findMany()
-        return user
+    async list(){
+        try {
+            const usuario = await prismaClient.usuario.findMany()
+            if(usuario){
+                const data = usuario.map(user => {
+                    const {senha, ...result} = user
+                    return result
+                })
+                return data
+            }
+            return 'error'
+        } catch (error) {
+            console.error(error);
+            return ('Erro ao buscar lista de usuarios')
+        }
     }
     
     // ativando usuario
@@ -38,31 +50,33 @@ class UserService {
         }
     }
     // edição de usuarios
-    async updateUser(id:number, nome: string, email: string, ocupacao: string){
-        const user = await prismaClient.usuario.findUnique({
-            where:{
-                id:id
-            },
-        })
-        
-        if(!user){
-            return 'Usuário não encontrado'
-        }
-        
-        const userUpdate = await prismaClient.usuario.update({
-            where:{
-                id: id,
-            },
-            data:{
-                email: email == '' ? user.email : email,
-                nome: nome == '' ? user.nome : nome,
-                ocupacao: ocupacao == '' ? user.ocupacao : ocupacao,
-                updated_at: new Date(),
+    async update(id: number, nome: string, email: string, ocupacao){
+        try {
+            const findUser = await prismaClient.usuario.findUnique({
+                where:{
+                    id
+                }
+            })
+            if(findUser){
+                const updateUser = await prismaClient.usuario.update({
+                    where: {
+                        id: id
+                    },
+                    data:{
+                        nome,
+                        email,
+                        ocupacao
+                    }
+                })
+
+                return updateUser
             }
-        })
-        return {userUpdate}
+            return 'usuário não encontrado'
+            
+        } catch (error) {
+            return 'error'
+        }
     }
-    
     // nova senha 
     async newPassword(id:number, senha: string){
         const user = await prismaClient.usuario.findUnique({
@@ -109,6 +123,7 @@ class UserService {
             delete_usuario,
             read_usuario,
             update_usuario} = props
+
         try {
             const searchUser = await prismaClient.usuario.findFirst({
                 where:{
@@ -123,13 +138,9 @@ class UserService {
                 const result = searchUser.email === email ? "com esse email" : "" || searchUser.nome === nome ? "com essa nome" : ""
                 return(`Usuário já cadastrado ${result}`)
             }
-        } catch (error) {
-            return("Error ao procurar usuário " + error)
-        }
-
-        const senhacript = senha;
-    
-        try {
+            
+            const senhacript = senha;
+            
             const user = await prismaClient.usuario.create({
                 data: {
                   nome,
@@ -184,12 +195,8 @@ class UserService {
             });
             return user
         } catch (error) {
-            console.error(error);
-            return("Erro ao cadastrar usuário" + error) 
+            return("Error ao procurar usuário " + error)
         }
-        
-
-        
     }
 
     // login
@@ -229,8 +236,11 @@ class UserService {
     //
     async showOne(id:number){
         try {
-            const user = await prismaClient.usuario.findUnique({where:{id}})
-            
+            const user = await prismaClient.usuario.findUnique({
+                where: {
+                    id
+                }
+            })
             if(user){
                 const data = { ...user }
                 delete data.senha

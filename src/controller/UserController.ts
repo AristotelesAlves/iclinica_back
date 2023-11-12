@@ -1,15 +1,14 @@
-import { Request, Response } from "express";
+import { Request, Response, response } from "express";
 import { UserService } from "../services/UserService";
 
 class userController{
-
     // criação de usuário
     async create(req: Request, res: Response){
         const {
             create_agendamento,
             create_anamnese,
-            delete_agendamento, 
-            delete_anamnese, 
+            delete_agendamento,
+            delete_anamnese,
             delete_consulta,
             nome,
             email,
@@ -21,7 +20,7 @@ class userController{
             senha,
             update_agendamento,
             update_anamnese,
-            update_consulta, 
+            update_consulta,
             create_paciente,
             delete_paciente,
             read_paciente,
@@ -30,13 +29,14 @@ class userController{
             delete_usuario,
             read_usuario,
             update_usuario
+
         } = req.body;
         const service = new UserService();
         const result = await service.create({
             create_agendamento,
             create_anamnese,
-            delete_agendamento, 
-            delete_anamnese, 
+            delete_agendamento,
+            delete_anamnese,
             delete_consulta,
             nome,
             email,
@@ -48,7 +48,7 @@ class userController{
             senha,
             update_agendamento,
             update_anamnese,
-            update_consulta, 
+            update_consulta,
             create_paciente,
             delete_paciente,
             read_paciente,
@@ -57,12 +57,12 @@ class userController{
             delete_usuario,
             read_usuario,
             update_usuario
-        });
-        res.json(result);
+    })
+        res.json(result)
     }
 
     // login
-    async logi(req: Request, res: Response){
+    async login(req: Request, res: Response){
         const {nome, senha} = req.body;
         const service = new UserService();
         const result = await service.login(nome, senha);
@@ -79,9 +79,9 @@ class userController{
 
     // Atualização de dados do usuario
     async update(req: Request, res: Response){
-        const { email, nome, ocupacao, id } = req.body;
+        const { id,nome,email,ocupacao } = req.body;
         const service = new UserService();
-        const result = await service.updateUser(email,nome,id, ocupacao)
+        const result = await service.update(id,nome, email,ocupacao)
         res.json(result);
     }
 
@@ -96,10 +96,10 @@ class userController{
     // lita user
     async list(req: Request, res: Response){
         const service = new UserService();
-        const result = await service.listUsers;
+        const result = await service.list();
         res.json(result);
     }
-
+ 
     // busca de um usuario
     async showOne(req: Request, res: Response){
         const {id} = req.params;

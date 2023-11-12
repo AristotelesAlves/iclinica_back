@@ -17,6 +17,8 @@ router.put('/usuario/isActive', new userController().isActive);
 router.put('/usuario/newPassworld', new userController().newPassword);
 router.put('/usuario/update', new userController().update);
 router.post('/usuario/create', new userController().create);
+router.post('/usuario/login', new userController().login)
+
 
 
 export {router}
