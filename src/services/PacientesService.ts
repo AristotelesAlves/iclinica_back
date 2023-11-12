@@ -4,7 +4,7 @@ import { prismaClient } from "../prisma/index";
 class PacientesService {
     async showOne(id: number) {
         try {
-            const paciente = await prismaClient.paciente.findFirst(
+            const paciente = await prismaClient.paciente.findUnique(
                 {
                     where: {
                         id: id
