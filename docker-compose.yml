@@ -1,8 +1,6 @@
 version: '3.8'
 services:
   app:
-    env_file:
-      - .env
     build: .
     command: npm run dev
     volumes: 
@@ -11,24 +9,13 @@ services:
       - "4444:4444"
     depends_on:
       - db
-    networks:
-      - mynetwork
   db:
     image: postgres:latest
-    container_name: db
     environment:
       - POSTGRES_USER=${USER}
       - POSTGRES_PASSWORD=${PASSWORD}
       - POSTGRES_DB=${DB}
     ports:
-      - '5432:5432'
-    networks:
-      - mynetwork
+      - '5422:5432'
 volumes:
   postgres:
-
-networks:
-  mynetwork:
-
-
-

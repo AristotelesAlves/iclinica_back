@@ -1,6 +1,5 @@
 import {Router} from "express"
 import { PacientesController } from "./controller/PacientesController"
-import { UserService } from "./services/UserService";
 import { userController } from "./controller/UserController";
 
 const router = Router()
@@ -18,9 +17,6 @@ router.put('/usuario/isActive', new userController().isActive);
 router.put('/usuario/newPassworld', new userController().newPassword);
 router.put('/usuario/update', new userController().update);
 router.post('/usuario/create', new userController().create);
-
-
-
 
 
 export {router}
