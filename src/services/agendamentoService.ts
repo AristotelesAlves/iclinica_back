@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { Iagendamento } from "../entities/agentamentoInterface";
 import { prismaClient } from "../prisma";
 
@@ -68,25 +69,36 @@ export class agendamentoService{
         }
     }
 
-    // async listFiltered(status: string, medico_id:number, paciente_id: number, data_de_agendado: string){
-    //     try {
-    //         const agenda = await prismaClient.agendamento.findMany({ 
-    //             where: {
-    //                 status,
-    //                 medico: medico_id ? { id: medico_id } : undefined,
-    //                 paciente: paciente_id ? { id: paciente_id } : undefined,
-    //                 data_de_agendado: data_de_agendado || undefined,
-    //             } 
-    //         });
-    //         if(agenda){
-    //             return agenda;
-    //         }
-    //         return 'Não encontrei nada'
-    //     } catch (error) {
-    //         console.error(error);
-    //         return "Erro ao buscar agenda";
-    //     }
-    // }
+    async listFiltered(status: string, medicoNome:string, pacienteNome: number, data_de_agendado: string){
+        try {
+            
+            const json = {} as Iagendamento;
+
+            if (status.length > 0) {
+                json.status = status;
+            }
+
+            if (medicoNome.length > 0) {
+                json.medico = { nome: medicoNome };
+            }
+
+            const agenda = await prismaClient.agendamento.findMany({ 
+                where: {
+                    extendedAgendamentosData:{
+                        equals: json as Prisma.JsonArray,
+                    }
+                }
+            });
+            if(agenda){
+                return agenda;
+            }
+
+            return 'error'
+        } catch (error) {
+            console.error(error);
+            return "Erro ao buscar agenda";
+        }
+    }
 
 
 }

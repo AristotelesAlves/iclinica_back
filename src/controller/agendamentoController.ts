@@ -35,15 +35,15 @@ export class agendamentoController{
         res.json(result);
     }
 
-    // async listFiltered(req: Request, res: Response){
-    //     const { status, medico_id, paciente_id, data_de_agendado } = req.body
-    //     const service = new agendamentoService()
-    //     const result = await service.listFiltered(
-    //         medico_id,
-    //          status,
-    //         paciente_id,
-    //         data_de_agendado
-    //         )
-    //     res.json(result)
-    // }
+    async listFiltered(req: Request, res: Response){
+        const { status, medicoNome, paciente_id, data_de_agendado } = req.body
+        const service = new agendamentoService()
+        const result = await service.listFiltered(
+            medicoNome,
+            status,
+            paciente_id,
+            data_de_agendado
+            )
+        res.json(result)
+    }
 }
