@@ -1,65 +1,69 @@
 version: '3.8'
 
 services:
-  app-1:
-    build: .
-    command: npm run dev
-    volumes: 
-      - .:/usr/src/app
-    ports:
-      - "4444:4444"
-    depends_on:
-      - db1
-      - db2
-    environment:
-      DATABASE_URL_1: "postgresql://adm:ari@db1:5422/iclinica"
-      DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
+  
 
-  app-2:
-    build: .
-    command: npm run dev
-    volumes: 
-      - .:/usr/src/app
-    depends_on:
-      - db1
-      - db2
-    environment:
-      DATABASE_URL_1: "postgresql://adm:ari@db1:5422/iclinica"
-      DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
+  # app-2:
+  #   build: .
+  #   command: npm run dev
+  #   volumes: 
+  #     - .:/usr/src/app
+  #   depends_on:
+  #     - db1
+  #     - db2
+  #   environment:
+  #     DATABASE_URL_1: "postgresql://adm:ari@db1:5422/iclinica"
+  #     DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
 
-  app-3:
-    build: .
-    command: npm run dev
-    volumes: 
-      - .:/usr/src/app
-    depends_on:
-      - db1
-      - db2
-    environment:
-      DATABASE_URL_1: "postgresql://adm:ari@db1:5422/iclinica"
-      DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
+  # app-3:
+  #   build: .
+  #   command: npm run dev
+  #   volumes: 
+  #     - .:/usr/src/app
+  #   depends_on:
+  #     - db1
+  #     - db2
+  #   environment:
+  #     DATABASE_URL_1: "postgresql://adm:ari@db1:5422/iclinica"
+  #     DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
 
   db1:
     image: postgres:latest
     environment:
-      - POSTGRES_USER=${USER}
-      - POSTGRES_PASSWORD=${PASSWORD}
-      - POSTGRES_DB=${DB1}
+      - POSTGRES_USER=`${USER}`
+      - POSTGRES_PASSWORD=`${PASSWORD}`
+      - POSTGRES_DB=$`{DB1}`
     ports:
       - '5422:5432'
     volumes:
       - postgres_data_1:/var/lib/postgresql/data
-
-  db2:
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=${USER}
-      - POSTGRES_PASSWORD=${PASSWORD}
-      - POSTGRES_DB=${DB2}
-    ports:
-      - '5423:5432'
-    volumes:
-      - postgres_data_2:/var/lib/postgresql/data
+    networks:
+      - iclinica-net
+  # app-1:
+  #   build: .
+  #   command: npm run dev
+  #   volumes: 
+  #     - .:/usr/src/app
+  #   ports:
+  #     - "4444:4444"
+  #   depends_on:
+  #     - db1
+  #     # - db2
+  #   environment:
+  #     USE_DATABASE: postgresql://adm:ari@db1:5422/iclinica
+  #     # DATABASE_URL_2: "postgresql://adm:ari@db2:5423/iclinica"
+  #   networks:
+  #     - iclinica-net
+  # db2:
+  #   image: postgres:latest
+  #   environment:
+  #     - POSTGRES_USER=${USER}
+  #     - POSTGRES_PASSWORD=${PASSWORD}
+  #     - POSTGRES_DB=${DB2}
+  #   ports:
+  #     - '5423:5432'
+  #   volumes:
+  #     - postgres_data_2:/var/lib/postgresql/data
   
   # nginx:
   #   image: nginx
@@ -73,4 +77,6 @@ services:
 
 volumes:
   postgres_data_1:
-  postgres_data_2:
+  # postgres_data_2:
+networks:
+    iclinica-net:
