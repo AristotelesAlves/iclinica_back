@@ -23,12 +23,44 @@ class PacientesService {
         }
     }
 
-    async list() {
+    async list(page: number = 1, nome: string = '') {
         try {
-            const pacientes = await prismaClient.paciente.findMany()
+            let take = 10;
+            let skip = (page - 1) * 10;
+            const query = {take: take, skip: skip, orderBy: [{nome: 'asc'}], where: {}};
+
+            if (nome) {
+                query.where = {
+                    nome: {
+                        contains: nome,
+                        mode: 'insensitive',
+                    }
+                };
+            }
+
+            const pacientes = await prismaClient.paciente.findMany(query as any)
             return pacientes
         } catch (error) {
             return (`Falha ao buscar lista de paciente`);
+        }
+    }
+
+    async count(nome: string = '') {
+        try {
+            const query = {where: {}};
+
+            if (nome) {
+                query.where = {
+                    nome: {
+                        contains: nome,
+                        mode: 'insensitive',
+                    }
+                };
+            }
+            const pacientes = await prismaClient.paciente.count(query)
+            return pacientes
+        } catch (error) {
+            return (error);
         }
     }
 

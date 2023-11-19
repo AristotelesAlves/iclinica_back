@@ -6,11 +6,13 @@ import { agendamentoController } from "./controller/agendamentoController";
 const router = Router()
 
 router.get('/paciente', new PacientesController().list);
+router.get('/paciente/count', new PacientesController().count);
 router.get('/paciente/:id', new PacientesController().showOne);
 router.put('/paciente/edit', new PacientesController().edit);
 router.post('/paciente/create', new PacientesController().create);
-router.put('/paciente/active', new PacientesController().active);
-router.put('/paciente/inactive', new PacientesController().inative);
+router.put('/paciente/active/:id', new PacientesController().active);
+router.put('/paciente/inactive/:id', new PacientesController().inative);
+
 
 router.get('/usuario', new userController().list);
 router.get('/usuario/:id', new userController().showOne);
@@ -24,7 +26,7 @@ router.post('/usuario/login', new userController().login);
 router.get('/agenda', new agendamentoController().list)
 router.post('/agenda/create', new agendamentoController().create)
 router.put('/agenda/update-status', new agendamentoController().status)
-router.get('/agenda/lista-filro', new agendamentoController().listFiltered)
+// router.get('/agenda/lista-filro', new agendamentoController().listFiltered)
 
 
 

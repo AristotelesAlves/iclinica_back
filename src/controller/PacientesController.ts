@@ -40,9 +40,9 @@ class PacientesController {
     async inative(req: Request, res: Response) {
         const {
             id,
-        } = req.body;
+        } = req.params;
         const service = new PacientesService();
-        const result = await service.inactive(id);
+        const result = await service.inactive(parseInt(id));
         res.json(result);
     }
 
@@ -50,17 +50,27 @@ class PacientesController {
     async active(req: Request, res: Response) {
         const {
             id,
-        } = req.body;
+        } = req.params;
         const service = new PacientesService();
-        const result = await service.active(id);
+        const result = await service.active(parseInt(id));
         res.json(result);
     }
 
     // Listar paciente
     async list(req: Request, res: Response) {
         const service = new PacientesService();
-        const result = await service.list();
+        let page = req.query.page;
+        let nome = req.query.nome;
+        const result = await service.list(parseInt((page as string) ?? '1'), nome as string);
         res.json(result);
+    }
+
+    // Contar pacientes
+    async count(req: Request, res: Response) {
+        const service = new PacientesService();
+        let nome = req.query.nome;
+        const result = await service.count(nome as string);
+        res.json({total: result});
     }
 
     // Exibir um paciente
