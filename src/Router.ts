@@ -8,8 +8,8 @@ const router = Router()
 router.get('/paciente', new PacientesController().list);
 router.get('/paciente/count', new PacientesController().count);
 router.get('/paciente/:id', new PacientesController().showOne);
-router.put('/paciente/edit', new PacientesController().edit);
-router.post('/paciente/create', new PacientesController().create);
+router.put('/paciente/:id', new PacientesController().edit);
+router.post('/paciente', new PacientesController().create);
 router.put('/paciente/active/:id', new PacientesController().active);
 router.put('/paciente/inactive/:id', new PacientesController().inative);
 

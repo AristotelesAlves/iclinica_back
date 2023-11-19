@@ -5,33 +5,41 @@ class PacientesController {
 
     // Criar paciente
     async create(req: Request, res: Response) {
-        const {
-            nascimento_data,
+        var {
+            data_nascimento,
             nome,
             cpf,
             telefone,
-            email
+            email,
+            endereco,
+            numero,
         } = req.body;
+        numero = Number(numero);
         const service = new PacientesService();
         const result = await service.create({
-            nascimento_data, nome, cpf, telefone, email
+            data_nascimento, nome, cpf, telefone, email, endereco, numero
         });
         res.json(result);
     }
 
     // Editar paciente
     async edit(req: Request, res: Response) {
-        const {
-            nascimento_data,
+        var {
+            data_nascimento,
             nome,
             cpf,
             telefone,
             email,
-            id,
+            endereco,
+            numero
         } = req.body;
+        const {id} = req.params;
         const service = new PacientesService();
-        const result = await service.update(id, {
-            nascimento_data, nome, cpf, telefone, email
+
+        numero = Number(numero);
+
+        const result = await service.update(Number(id), {
+            data_nascimento, nome, cpf, telefone, email, endereco, numero
         });
         res.json(result);
     }

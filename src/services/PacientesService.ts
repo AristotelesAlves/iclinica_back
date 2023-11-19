@@ -66,7 +66,7 @@ class PacientesService {
 
     async create(props: PacienteInterface) {
         const {
-            nascimento_data,
+            data_nascimento,
             nome,
             cpf,
             telefone,
@@ -98,7 +98,7 @@ class PacientesService {
                 data: {
                     nome: nome,
                     email: email,
-                    data_nascimento: nascimento_data,
+                    data_nascimento: data_nascimento,
                     telefone: telefone,
                     cpf: cpf,
                     created_at: new Date(),
@@ -129,7 +129,7 @@ class PacientesService {
                 return(`Paciente não encontrado.`);
             }
 
-            const { nome, email, cpf, data_nascimento, telefone } = searchPaciente
+            const { nome, email, cpf, data_nascimento, telefone, endereco, numero} = searchPaciente
 
 
             return await prismaClient.paciente.update({
@@ -140,8 +140,10 @@ class PacientesService {
                     nome: props.nome == "" ? nome : props.nome,
                     email: props.email == "" ? email : props.email,
                     cpf: props.cpf == "" ? cpf : props.cpf,
-                    data_nascimento: props.nascimento_data == "" ? data_nascimento : props.nascimento_data,
+                    endereco: props.endereco == "" ? endereco : props.endereco,
+                    data_nascimento: props.data_nascimento == "" ? data_nascimento : props.data_nascimento,
                     telefone: props.telefone == "" ? telefone : props.telefone,
+                    numero: !props.numero ? numero : props.numero
                   },
             });
         } catch (error) {
