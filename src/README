@@ -1,0 +1,60 @@
+API de Agendamento de Consultas Médicas
+Bem-vindo à API de Agendamento de Consultas Médicas! Esta API foi desenvolvida para facilitar o agendamento de consultas médicas em um ambiente de saúde. Utilize-a para criar, visualizar, atualizar e cancelar consultas de forma eficiente.
+
+Requisitos
+Certifique-se de ter o Node.js e o npm instalados em seu ambiente de desenvolvimento.
+
+Node.js: https://nodejs.org/
+npm: Normalmente é instalado automaticamente com o Node.js
+Configuração
+Clone este repositório:
+bash
+Copy code
+git clone https://github.com/seu-usuario/api-agendamento-consultas.git
+cd api-agendamento-consultas
+Instale as dependências:
+bash
+Copy code
+npm install
+Configure as variáveis de ambiente. Crie um arquivo .env na raiz do projeto e defina as variáveis necessárias:
+env
+Copy code
+PORT=3000
+MONGODB_URI=mongodb://localhost:27017/agendamento-consultas
+Certifique-se de ter um servidor MongoDB em execução e atualize a URI de acordo.
+
+Uso
+Inicie o servidor:
+
+bash
+Copy code
+npm start
+A API estará acessível em http://localhost:3000.
+
+Rotas
+GET /consultas: Retorna a lista de consultas agendadas.
+GET /consultas/:id: Retorna os detalhes de uma consulta específica.
+POST /consultas: Agenda uma nova consulta.
+Corpo da requisição JSON:
+json
+Copy code
+{
+  "paciente": "Nome do Paciente",
+  "medico": "Nome do Médico",
+  "data": "2023-12-01T10:00:00",
+  "especialidade": "Cardiologia"
+}
+PUT /consultas/:id: Atualiza os detalhes de uma consulta existente.
+DELETE /consultas/:id: Cancela uma consulta agendada.
+Contribuindo
+Sinta-se à vontade para contribuir para o desenvolvimento desta API. Abra uma issue para discutir novos recursos ou problemas encontrados.
+
+Licença
+Este projeto está licenciado sob a MIT License.
+
+Esperamos que esta API facilite o agendamento de consultas médicas em seu projeto! Se tiver dúvidas ou sugestões, entre em contato.
+
+
+
+
+
