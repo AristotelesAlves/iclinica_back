@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jquery": "^3.5.29",
     "@types/node": "^20.6.3",
     "prisma": "^5.3.1",
     "ts-node-dev": "^2.0.0",

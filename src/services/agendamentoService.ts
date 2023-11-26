@@ -63,7 +63,7 @@ export class agendamentoService{
                     status: statusAgenda
                 }
             })
-            return ${statusAgenda}
+            return {statusAgenda}
         } catch (error) {
             return "Erro ao mudar o status do agendamento"
         }
