@@ -8,9 +8,9 @@ COPY prisma/schema.prisma ./
  
 RUN npm install
 
-RUN npx prisma generate
-
 RUN npm install @prisma/client@latest
+
+RUN npx prisma generate dev
 
 COPY tsconfig.json ./
 
