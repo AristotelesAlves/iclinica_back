@@ -15,7 +15,7 @@ class UserService {
             return 'error'
         } catch (error) {
             console.error(error);
-            return ('Erro ao buscar lista de usuarios')
+            return (error)
         }
     }
     

@@ -1,21 +1,39 @@
 version: '3.8'
+
 services:
-  app:
-    build: .
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=adm
+      - POSTGRES_PASSWORD=ari
+      - POSTGRES_DB=iclinica
+    ports:
+      - '5422:5432'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    networks:
+      - iclinica-net
+    restart: unless-stopped
+
+  app-1:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: dockerfile
     command: npm run dev
     volumes: 
       - .:/usr/src/app
+    environment:
+      - USE_DATABASE=postgresql://adm:ari@db:5432/iclinica?schema=public
     ports:
       - "4444:4444"
     depends_on:
       - db
-  db:
-    image: postgres:latest
-    environment:
-      - POSTGRES_USER=${USER}
-      - POSTGRES_PASSWORD=${PASSWORD}
-      - POSTGRES_DB=${DB}
-    ports:
-      - '5422:5432'
+    networks:
+      - iclinica-net
+    restart: always
+
 volumes:
   postgres:
+networks:
+    iclinica-net:

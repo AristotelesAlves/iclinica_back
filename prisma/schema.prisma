@@ -3,15 +3,15 @@
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("USE_DATABASE")
 }
+
 model Paciente {
-  id              Int        @id @default(autoincrement())
+  id              Int      @id @default(autoincrement())
   nome            String
   cpf             String?
   data_nascimento String?
@@ -28,13 +28,12 @@ model Paciente {
   is_active       Boolean
 
   agendamento Agendamento[]
-  constulta Consulta[]
-  anamnese Anamnese []
-
+  constulta   Consulta[]
+  anamnese    Anamnese[]
 }
 
 model Anamnese {
-  id                             Int     @id @default(autoincrement())
+  id                             Int      @id @default(autoincrement())
   infeccao_urinaria              Boolean?
   dst                            String?
   pedra_nos_rins                 String?
@@ -51,25 +50,24 @@ model Anamnese {
   deleted_at DateTime
   is_active  Boolean
 
-
-  paciente_ Paciente @relation(fields: [paciente_id], references: [id])
+  paciente_   Paciente @relation(fields: [paciente_id], references: [id])
   paciente_id Int
 }
 
 model Agendamento {
-  id               Int      @id @default(autoincrement())
-  observacao       String
-  status           String
-  data_de_agendado DateTime
-  created_at       DateTime
-  updated_at       DateTime
-  deleted_at       DateTime
+  id                       Int      @id @default(autoincrement())
+  observacao               String
+  status                   String
+  data_de_agendado         DateTime
+  created_at               DateTime
+  updated_at               DateTime
+  deleted_at               DateTime
+  extendedAgendamentosData Json?
 
-  
-  medico Usuario @relation(fields: [medico_id], references: [id])
+  medico    Usuario @relation(fields: [medico_id], references: [id])
   medico_id Int
 
-  paciente Paciente @relation(fields: [paciente_id], references: [id])
+  paciente    Paciente @relation(fields: [paciente_id], references: [id])
   paciente_id Int
 }
 
@@ -83,12 +81,12 @@ model Consulta {
   updated_at  DateTime
   deleted_at  DateTime
 
-  medico Usuario @relation(fields: [medico_id],references: [id])
-  medico_id Int
-  paciente Paciente @relation(fields: [paciente_id], references: [id])
+  medico      Usuario  @relation(fields: [medico_id], references: [id])
+  medico_id   Int
+  paciente    Paciente @relation(fields: [paciente_id], references: [id])
   paciente_id Int
-
 }
+
 model Usuario {
   id         Int      @id @default(autoincrement())
   nome       String   @unique
@@ -100,23 +98,23 @@ model Usuario {
   deleted_at DateTime
   is_active  Boolean
 
-  agendamento Agendamento[]
-  consulta Consulta[]
-  controle_paciente Controle_paciente[]
-  controle_anamnese Controle_anamnese[]
+  agendamento          Agendamento[]
+  consulta             Consulta[]
+  controle_paciente    Controle_paciente[]
+  controle_anamnese    Controle_anamnese[]
   controle_agendamento Controle_agendamento[]
-  controle_consulta Controle_consulta[]
-  controle_usuario Controle_usuario[]
+  controle_consulta    Controle_consulta[]
+  controle_usuario     Controle_usuario[]
 }
 
 model Controle_paciente {
-  id              Int             @id @default(autoincrement())
+  id              Int     @id @default(autoincrement())
   read_paciente   Boolean
   create_paciente Boolean
   update_paciente Boolean
   delete_paciente Boolean
-  
-  usuario  Usuario @relation(fields: [id], references: [id])
+
+  usuario    Usuario @relation(fields: [id], references: [id])
   usuario_id Int?
 }
 
@@ -128,7 +126,7 @@ model Controle_anamnese {
   read_anamnese   Boolean
   delete_anamnese Boolean
 
-  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario    Usuario @relation(fields: [id], references: [id])
   usuario_id Int?
 }
 
@@ -140,9 +138,8 @@ model Controle_agendamento {
   read_agendamento   Boolean
   delete_agendamento Boolean
 
-  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario    Usuario @relation(fields: [id], references: [id])
   usuario_id Int?
-  
 }
 
 model Controle_consulta {
@@ -152,7 +149,7 @@ model Controle_consulta {
   read_consulta   Boolean
   delete_consulta Boolean
 
-  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario    Usuario @relation(fields: [id], references: [id])
   usuario_id Int?
 }
 
@@ -163,6 +160,6 @@ model Controle_usuario {
   read_usuario   Boolean
   delete_usuario Boolean
 
-  usuario  Usuario @relation(fields: [id], references: [id])
+  usuario    Usuario @relation(fields: [id], references: [id])
   usuario_id Int?
 }

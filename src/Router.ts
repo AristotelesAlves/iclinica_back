@@ -1,7 +1,8 @@
-import {Router} from "express"
+import {Request, Response, Router} from "express"
 import { PacientesController } from "./controller/PacientesController"
 import { userController } from "./controller/UserController";
 import { agendamentoController } from "./controller/agendamentoController";
+import { prismaClient } from "./prisma";
 
 const router = Router()
 
@@ -27,6 +28,12 @@ router.get('/agenda', new agendamentoController().list)
 router.post('/agenda/create', new agendamentoController().create)
 router.put('/agenda/update-status', new agendamentoController().status)
 // router.get('/agenda/lista-filro', new agendamentoController().listFiltered)
+
+router.get('/test', async (req: Request, res: Response) => {
+    const pc = await prismaClient.paciente.count()
+    const result = pc ? 'true' : 'false'
+    res.json(result)
+})
 
 
 
