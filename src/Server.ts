@@ -8,4 +8,4 @@ const app = Express();
 app.use(Express.json());
 app.use(cors());
 app.use(router);
-app.listen((4444), () => console.log(`servidor rodando ${process.env.USE_DATABASE}`))
+app.listen((4444), () => console.log(`servidor rodando na porta 4444`))
